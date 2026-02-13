@@ -1,0 +1,89 @@
+/*[T] @autor Adrián Díaz. */
+public abstract class Ficha {
+    private char color;
+    private Casilla posicion;
+
+    public Ficha(char color, Casilla posicion) {
+        this.color = color;
+        this.posicion = posicion;
+    }
+    public char getColor() {
+        return color;
+    }
+    public Casilla getPosicion() {
+        return posicion;
+    }
+    public void setColor(char color) {
+        this.color = color;
+    }
+    public void setPosicion(Casilla posicion) {
+        this.posicion = posicion;
+    }
+    public abstract boolean moverA(Casilla casilla);
+}
+public class Alfil extends Ficha {
+    private int vidas;
+
+    public Alfil(char color, Casilla posicion, int vidas) {
+        super(color, posicion);
+        this.vidas = vidas;
+    }
+    public int getVidas() {
+        return vidas;
+    }
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
+    }
+    @Override
+    public boolean moverA(Casilla casilla) {
+        int filaActual = getPosicion().getFila();
+        int columnaActual = getPosicion().getColumna();
+        int filaDestino = casilla.getFila();
+        int columnaDestino = casilla.getColumna();
+
+        // El alfil se mueve en diagonal, por lo que la diferencia entre filas y columnas debe ser igual
+        return Math.abs(filaDestino - filaActual) == Math.abs(columnaDestino - columnaActual);
+    }
+}
+public class Caballo extends Ficha {
+
+    public Caballo(char color, Casilla posicion) {
+        super(color, posicion);
+    }
+
+    @Override
+    public boolean moverA(Casilla casilla) {
+        int filaActual = getPosicion().getFila();
+        int columnaActual = getPosicion().getColumna();
+        int filaDestino = casilla.getFila();
+        int columnaDestino = casilla.getColumna();
+
+        // El caballo se mueve en forma de "L", por lo que debe moverse dos casillas en una dirección y luego una casilla en la dirección perpendicular
+        return (Math.abs(filaDestino - filaActual) == 2 && Math.abs(columnaDestino - columnaActual) == 1) ||
+               (Math.abs(filaDestino - filaActual) == 1 && Math.abs(columnaDestino - columnaActual) == 2);
+    }
+}
+public class Torre extends Ficha {
+    private int turnoExtra;
+
+    public Torre(char color, Casilla posicion, int turnoExtra) {
+        super(color, posicion);
+        this.turnoExtra = turnoExtra;
+    }
+    public int getTurnoExtra() {
+        return turnoExtra;
+    }
+    public void setTurnoExtra(int turnoExtra) {
+        this.turnoExtra = turnoExtra;
+    }
+    @Override
+    public boolean moverA(Casilla casilla) {
+        int filaActual = getPosicion().getFila();
+        int columnaActual = getPosicion().getColumna();
+        int filaDestino = casilla.getFila();
+        int columnaDestino = casilla.getColumna();
+
+        // La torre se mueve en línea recta, por lo que debe moverse en la misma fila o en la misma columna
+        return filaActual == filaDestino || columnaActual == columnaDestino;
+    }
+}
