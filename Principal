@@ -12,25 +12,23 @@ public class Principal {
         int[] octetos = new int[4];
         int contador = 0;
 
-        // El bucle sigue mientras no tengamos los 4 números
-        while (contador < 4) {
+        do {
             System.out.println("Introduce el octeto " + (contador + 1) + " (0-255): ");
-
             if (sc.hasNextInt()) {
                 int numero = sc.nextInt();
-
-                // Validamos el rango
                 if (numero >= 0 && numero <= 255) {
-                    octetos[contador] = numero; 
-                    contador++; // ¡Solo avanzamos si todo está perfecto!
+                    octetos[contador] = numero;
+                    contador++;
                 } else {
-                    System.out.println("Error: El número debe estar entre 0 y 255.");
+                        System.out.println("Error: El número debe estar entre 0 y 255.");
                 }
             } else {
-                // Si no es un entero (ej: "hola"), entramos aquí
-                String basura = sc.next(); 
-                System.out.println("Error: '" + basura + "' no es un número.");
-            }
-        }
+                // "Barremos" la entrada inválida
+                String basura = sc.next();
+                System.out.println("Error: '" + basura + "' no es un número válido.");
+                }
+        } while (contador < 4);
+
+        System.out.println("La dirección IPv4 generada es: " + octetos[0] + "." + octetos[1] + "." + octetos[2] + "." + octetos[3]);
     }
 }
