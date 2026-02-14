@@ -1,13 +1,30 @@
+import java.util.Scanner;
+/*[T] @autor Adrián Díaz. */
 public class Principal{
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         String[][] tablero = new String[5][5];
         Casilla casilla1 = new Casilla(0, 0);
-    
+
+        System.out.println("Introduce el tipo de ficha blanca deseada (Alfíl, Caballo o Torre): ");
+        String tipoFicha = scanner.nextLine();
+        System.out.println("Introduce la posición inicial de la ficha blanca (fila y columna): ");
+        tablero[casilla1.getFila()][casilla1.getColumna()] = casilla1.getFichaBlanca(tipoFicha);
+        
+
+        System.out.println("Tablero:");
+        System.out.println(tablero[0][0] + " " + tablero[0][1] + " " + tablero[0][2]);
+        System.out.println(tablero[1][0] + " " + tablero[1][1] + " " + tablero[1][2]);
+        System.out.println(tablero[2][0] + " " + tablero[2][1] + " " + tablero[2][2]);
+        System.out.println(tablero[3][0] + " " + tablero[3][1] + " " + tablero[3][2]);
+        System.out.println(tablero[4][0] + " " + tablero[4][1] + " " + tablero[4][2]);
+
+
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
                 tablero[i][j] = " ";
             }
         }
-    
     }
 }
