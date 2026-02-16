@@ -1,0 +1,28 @@
+package com.mycompany.principal;
+
+/*[T] @autor Adrián Díaz. */
+
+public class Torre extends Ficha {
+    private int turnoExtra;
+
+    public Torre(char color, Casilla posicion, int turnoExtra) {
+        super(color, posicion);
+        this.turnoExtra = turnoExtra;
+    }
+    public int getTurnoExtra() {
+        return turnoExtra;
+    }
+    public void setTurnoExtra(int turnoExtra) {
+        this.turnoExtra = turnoExtra;
+    }
+    @Override
+    public boolean moverA(Casilla casilla) {
+        int filaActual = getPosicion().getFila();
+        int columnaActual = getPosicion().getColumna();
+        int filaDestino = casilla.getFila();
+        int columnaDestino = casilla.getColumna();
+
+        // La torre se mueve en línea recta, por lo que debe moverse en la misma fila o en la misma columna
+        return filaActual == filaDestino || columnaActual == columnaDestino;
+    }
+}

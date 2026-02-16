@@ -14,6 +14,11 @@ public class Principal{
             }
         }
 
+        Ficha fichaBlanca = null;
+        Ficha fichaNegra = null;
+        String posicionBlanca = "";
+        String posicionNegra = "";
+
         System.out.println("Introduce el tipo de ficha blanca deseada (Alfíl, Caballo o Torre): ");
         String tipoFichaBlanca = sc.nextLine();
         
@@ -21,46 +26,61 @@ public class Principal{
         int filaBlanca = sc.nextInt();
         int columnaBlanca = sc.nextInt();
         sc.nextLine();
-        tablero[filaBlanca][columnaBlanca] = tipoFichaBlanca.substring(0, 1).toLowerCase() + "b";
+        
         
         if (tipoFichaBlanca.equalsIgnoreCase("Alfil")) {
-            tablero[filaBlanca][columnaBlanca] = "Ab";
+            fichaBlanca = new Alfil('b', new Casilla(filaBlanca, columnaBlanca), 1);
+            posicionBlanca = "Ab";
         } else if (tipoFichaBlanca.equalsIgnoreCase("Caballo")) {
-            tablero[filaBlanca][columnaBlanca] = "Cb";
+            fichaBlanca = new Caballo('b', new Casilla(filaBlanca, columnaBlanca));
+            posicionBlanca = "Cb";
         } else if (tipoFichaBlanca.equalsIgnoreCase("Torre")) {
-            tablero[filaBlanca][columnaBlanca] = "Tb";
+            fichaBlanca = new Torre('b', new Casilla(filaBlanca, columnaBlanca), 5);
+            posicionBlanca = "Tb";
         }
+
+        tablero[filaBlanca][columnaBlanca] = posicionBlanca;
         
         System.out.println("Introduce el tipo de ficha negra deseada (Alfíl, Caballo o Torre): ");
         String tipoFichaNegra = sc.nextLine();
+        int filaNegra, columnaNegra;
         
-        System.out.println("Introduce la posición inicial de la ficha negra (fila y columna): ");
-        int filaNegra = sc.nextInt();
-        int columnaNegra = sc.nextInt();
-        sc.nextLine();
-        
-        if (filaNegra == filaBlanca && columnaNegra == columnaBlanca) {
-            System.out.println("La posición de la ficha negra no puede ser la misma que la de la ficha blanca. Por favor, introduce una posición diferente.");
-            return;
-        } else {
-            tablero[filaNegra][columnaNegra] = tipoFichaNegra.substring(0, 1).toLowerCase() + "n";
-        }
-        
-        if (tipoFichaNegra.equalsIgnoreCase("Alfil")) {
-            tablero[filaNegra][columnaNegra] = "An";
-        } else if (tipoFichaNegra.equalsIgnoreCase("Caballo")) {
-            tablero[filaNegra][columnaNegra] = "Cn";
-        } else if (tipoFichaNegra.equalsIgnoreCase("Torre")) {
-            tablero[filaNegra][columnaNegra] = "Tn";
-        }
-        
-        System.out.println("Tablero:");
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero[i].length; j++) {
-                System.out.print(tablero[i][j] + "\t");
+        do {
+            System.out.println("Introduce la posición inicial de la ficha negra (fila y columna): ");
+            int filaNegra = sc.nextInt();
+            int columnaNegra = sc.nextInt();
+            sc.nextLine();
+
+            if (filaNegra == filaBlanca && columnaNegra == columnaBlanca) {
+                System.out.println("¡Posición ocupada! No puedes ocupar la posición del enemigo al inicio.");
             }
+        } while (filaNegra == filaBlanca && columnaNegra == columnaBlanca);
+        
+        if (tipoNegra.equalsIgnoreCase("Alfil")) {
+            fichaNegra = new Alfil('n', new Casilla(filaNegra, columnaNegra), 1);
+            etiquetaNegra = "An";
+        } else if (tipoNegra.equalsIgnoreCase("Caballo")) {
+            fichaNegra = new Caballo('n', new Casilla(filaNegra, columnaNegra));
+            etiquetaNegra = "Cn";
+        } else if (tipoNegra.equalsIgnoreCase("Torre")) {
+            fichaNegra = new Torre('n', new Casilla(filaNegra, columnaNegra), 5);
+            etiquetaNegra = "Tn";
+        }
+        tablero[filaNegra][columnaNegra] = etiquetaNegra;
+
+        boolean hayGanador = false;
+        boolean esTurnoBlanco = true;
+        
+        while (!hayGanador) {
+            System.out.println("Tablero:");
+            for (int i = 0; i < tablero.length; i++) {
+                for (int j = 0; j < tablero[i].length; j++) {
+                    System.out.print(tablero[i][j] + "\t");
+                }
+                System.out.println();
+            }
+
             
-            System.out.println();
         }
     }
 }

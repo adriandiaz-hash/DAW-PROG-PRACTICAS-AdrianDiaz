@@ -1,0 +1,28 @@
+package com.mycompany.principal;
+
+/*[T] @autor Adrián Díaz. */
+
+public class Alfil extends Ficha {
+    private int vidas;
+
+    public Alfil(char color, Casilla posicion, int vidas) {
+        super(color, posicion);
+        this.vidas = vidas;
+    }
+    public int getVidas() {
+        return vidas;
+    }
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
+    }
+    @Override
+    public boolean moverA(Casilla casilla) {
+        int filaActual = getPosicion().getFila();
+        int columnaActual = getPosicion().getColumna();
+        int filaDestino = casilla.getFila();
+        int columnaDestino = casilla.getColumna();
+
+        // El alfil se mueve en diagonal, por lo que la diferencia entre filas y columnas debe ser igual
+        return Math.abs(filaDestino - filaActual) == Math.abs(columnaDestino - columnaActual);
+    }
+}

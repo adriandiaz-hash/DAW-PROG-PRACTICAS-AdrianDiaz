@@ -1,0 +1,22 @@
+package com.mycompany.principal;
+
+/*[T] @autor Adrián Díaz. */
+
+public class Caballo extends Ficha {
+
+    public Caballo(char color, Casilla posicion) {
+        super(color, posicion);
+    }
+
+    @Override
+    public boolean moverA(Casilla casilla) {
+        int filaActual = getPosicion().getFila();
+        int columnaActual = getPosicion().getColumna();
+        int filaDestino = casilla.getFila();
+        int columnaDestino = casilla.getColumna();
+
+        // El caballo se mueve en forma de "L", por lo que debe moverse dos casillas en una dirección y luego una casilla en la dirección perpendicular
+        return (Math.abs(filaDestino - filaActual) == 2 && Math.abs(columnaDestino - columnaActual) == 1) ||
+               (Math.abs(filaDestino - filaActual) == 1 && Math.abs(columnaDestino - columnaActual) == 2);
+    }
+}
