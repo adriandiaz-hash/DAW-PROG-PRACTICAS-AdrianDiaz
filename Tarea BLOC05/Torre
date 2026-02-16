@@ -4,6 +4,7 @@ package com.mycompany.principal;
 
 public class Torre extends Ficha {
     private int turnoExtra;
+    private int contarPasos = 0;
 
     public Torre(char color, Casilla posicion, int turnoExtra) {
         super(color, posicion);
@@ -21,8 +22,21 @@ public class Torre extends Ficha {
         int columnaActual = getPosicion().getColumna();
         int filaDestino = casilla.getFila();
         int columnaDestino = casilla.getColumna();
+        boolean movimientoValido = false;
 
-        // La torre se mueve en línea recta, por lo que debe moverse en la misma fila o en la misma columna
-        return filaActual == filaDestino || columnaActual == columnaDestino;
+        if (movimientoValido = filaActual == filaDestino || columnaActual == columnaDestino) {
+            contarPasos++;
+            return movimientoValido;
+        } else {
+            return false;
+        }
+    }
+    public boolean tieneTurnoExtra() {
+        if (contarPasos >= turnoExtra) {
+            contarPasos = 0; // Reiniciar el contador después de otorgar el turno extra
+            return true;
+        } else {
+            return false;
+        }
     }
 }

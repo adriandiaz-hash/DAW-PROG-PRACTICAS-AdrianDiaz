@@ -4,10 +4,15 @@ package com.mycompany.principal;
 
 public class Alfil extends Ficha {
     private int vidas;
+    private Casilla posicionInicial;
 
     public Alfil(char color, Casilla posicion, int vidas) {
         super(color, posicion);
         this.vidas = vidas;
+        this.posicionInicial = posicion;
+    }
+    public Casilla getPosicionInicial() {
+        return posicionInicial;
     }
     public int getVidas() {
         return vidas;

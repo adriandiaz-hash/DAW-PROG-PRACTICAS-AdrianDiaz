@@ -1,4 +1,7 @@
+package com.mycompany.principal;
+
 /*[T] @autor Adrián Díaz. */
+
 public class Casilla {
     private int fila;
     private int columna;

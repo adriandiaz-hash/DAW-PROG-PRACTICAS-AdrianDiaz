@@ -1,13 +1,58 @@
 package com.mycompany.principal;
 import java.util.Scanner;
+
 /*[T] @autor Adrián Díaz. */
 
 public class Principal{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int opcion;
 
+        // Menú principal
+        do {
+            System.out.println("\n--- BIENVENIDO AL JAVAJEDREZ ---");
+            System.out.println("1. Modo básico");
+            System.out.println("2. Modo avanzado");
+            System.out.println("3. Salir");
+            System.out.print("Elija una opción: ");
+            opcion = sc.nextInt();
+            sc.nextLine();
+
+            if (opcion == 3) {
+                System.out.println("Saliendo del sistema...");
+                break;
+            }
+
+            // Valores por defecto para configuración básica
+            int vidasAlfil = 1;
+            int movimientosTorreParaExtra = 5;
+
+            if (opcion == 2) {
+                System.out.println("--- CONFIGURACIÓN MODO AVANZADO ---");
+                
+                // Configuración Torre
+                do {
+                    System.out.println("Introduce el número de movimientos (entre 3 y 10) para el turno extra de la Torre: ");
+                    movimientosTorreParaExtra = sc.nextInt();
+                    sc.nextLine();
+                    if (movimientosTorreParaExtra < 3 || movimientosTorreParaExtra > 10) {
+                        System.out.println("Error: Debe ser entre 3 y 10.");
+                    }
+                } while (movimientosTorreParaExtra < 3 || movimientosTorreParaExtra > 10);
+
+                // Configuración Alfil
+                do {
+                    System.out.println("Introduce el número de vidas extra para el Alfil: ");
+                    vidasAlfil = sc.nextInt();
+                    sc.nextLine();
+                    if (vidasAlfil < 0) {
+                        System.out.println("Error: Debe tener al menos 1 vida (0 vidas extra).");
+                    }
+                } while (vidasAlfil < 0);
+            }
+
+            //Inicialización del juego.
         String[][] tablero = new String[5][5];
-        
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
                 tablero[i][j] = "0";
@@ -19,9 +64,10 @@ public class Principal{
         String posicionBlanca = "";
         String posicionNegra = "";
 
+        //Creación de ficha blanca.
+        System.out.println("\n--- JUGADOR BLANCO ---");
         System.out.println("Introduce el tipo de ficha blanca deseada (Alfíl, Caballo o Torre): ");
         String tipoFichaBlanca = sc.nextLine();
-        
         System.out.println("Introduce la posición inicial de la ficha blanca (fila y columna): ");
         int filaBlanca = sc.nextInt();
         int columnaBlanca = sc.nextInt();
@@ -29,26 +75,27 @@ public class Principal{
         
         
         if (tipoFichaBlanca.equalsIgnoreCase("Alfil")) {
-            fichaBlanca = new Alfil('b', new Casilla(filaBlanca, columnaBlanca), 1);
+            fichaBlanca = new Alfil('b', new Casilla(filaBlanca, columnaBlanca), vidasAlfil); 
             posicionBlanca = "Ab";
         } else if (tipoFichaBlanca.equalsIgnoreCase("Caballo")) {
             fichaBlanca = new Caballo('b', new Casilla(filaBlanca, columnaBlanca));
             posicionBlanca = "Cb";
         } else if (tipoFichaBlanca.equalsIgnoreCase("Torre")) {
-            fichaBlanca = new Torre('b', new Casilla(filaBlanca, columnaBlanca), 5);
+            fichaBlanca = new Torre('b', new Casilla(filaBlanca, columnaBlanca), movimientosTorreParaExtra);
             posicionBlanca = "Tb";
         }
-
         tablero[filaBlanca][columnaBlanca] = posicionBlanca;
-        
+
+        //Creación de ficha negra.
+        System.out.println("\n--- JUGADOR NEGRO ---");
         System.out.println("Introduce el tipo de ficha negra deseada (Alfíl, Caballo o Torre): ");
         String tipoFichaNegra = sc.nextLine();
         int filaNegra, columnaNegra;
         
         do {
             System.out.println("Introduce la posición inicial de la ficha negra (fila y columna): ");
-            int filaNegra = sc.nextInt();
-            int columnaNegra = sc.nextInt();
+            filaNegra = sc.nextInt();
+            columnaNegra = sc.nextInt();
             sc.nextLine();
 
             if (filaNegra == filaBlanca && columnaNegra == columnaBlanca) {
@@ -56,21 +103,23 @@ public class Principal{
             }
         } while (filaNegra == filaBlanca && columnaNegra == columnaBlanca);
         
-        if (tipoNegra.equalsIgnoreCase("Alfil")) {
-            fichaNegra = new Alfil('n', new Casilla(filaNegra, columnaNegra), 1);
-            etiquetaNegra = "An";
-        } else if (tipoNegra.equalsIgnoreCase("Caballo")) {
+        if (tipoFichaNegra.equalsIgnoreCase("Alfil")) {
+            fichaNegra = new Alfil('n', new Casilla(filaNegra, columnaNegra), vidasAlfil); 
+            posicionNegra = "An";
+        } else if (tipoFichaNegra.equalsIgnoreCase("Caballo")) {
             fichaNegra = new Caballo('n', new Casilla(filaNegra, columnaNegra));
-            etiquetaNegra = "Cn";
-        } else if (tipoNegra.equalsIgnoreCase("Torre")) {
-            fichaNegra = new Torre('n', new Casilla(filaNegra, columnaNegra), 5);
-            etiquetaNegra = "Tn";
+            posicionNegra = "Cn";
+        } else if (tipoFichaNegra.equalsIgnoreCase("Torre")) {
+            fichaNegra = new Torre('n', new Casilla(filaNegra, columnaNegra), movimientosTorreParaExtra);
+            posicionNegra = "Tn";
         }
-        tablero[filaNegra][columnaNegra] = etiquetaNegra;
+        tablero[filaNegra][columnaNegra] = posicionNegra;
 
+        // Bucle principal del juego (universal).
         boolean hayGanador = false;
         boolean esTurnoBlanco = true;
         
+        //Dibuja Tablero inicial.
         while (!hayGanador) {
             System.out.println("Tablero:");
             for (int i = 0; i < tablero.length; i++) {
@@ -80,7 +129,75 @@ public class Principal{
                 System.out.println();
             }
 
-            
-        }
+            //Indentificador de turno.
+            Ficha fichaActiva = esTurnoBlanco ? fichaBlanca : fichaNegra;
+            Ficha enemigo = esTurnoBlanco ? fichaNegra : fichaBlanca;
+            String posicionActiva = esTurnoBlanco ? posicionBlanca : posicionNegra;
+            String posicionEnemiga = esTurnoBlanco ? posicionNegra : posicionBlanca;
+            String nombreJugador = esTurnoBlanco ? "BLANCO" : "NEGRO";
+
+            System.out.println("\n Turno del jugador " + nombreJugador + " (" + posicionActiva + ")");
+            System.out.println("Introduce coordenadas de destino (fila y columna): ");
+            int filaDestino = sc.nextInt();
+            int columnaDestino = sc.nextInt();
+            sc.nextLine();
+
+            if (filaDestino < 0 || filaDestino >= tablero.length || columnaDestino < 0 || columnaDestino >= tablero[0].length) {
+                System.out.println("¡Movimiento fuera del tablero! Intenta de nuevo.");
+                continue;
+            }
+
+            Casilla destino = new Casilla(filaDestino, columnaDestino);
+
+            // Lógica de movimiento base.
+            if (fichaActiva.moverA(destino)) {
+                tablero[fichaActiva.getPosicion().getFila()][fichaActiva.getPosicion().getColumna()] = "0";
+                fichaActiva.setPosicion(destino);
+                tablero[filaDestino][columnaDestino] = posicionActiva;
+
+                //Lógcia de captura y resurrección (Alfil).
+                    if (filaDestino == enemigo.getPosicion().getFila() && columnaDestino == enemigo.getPosicion().getColumna()) {
+                        
+                        // ¿Es un Alfil con vidas?
+                        if (enemigo instanceof Alfil && ((Alfil) enemigo).getVidas() > 0) {
+                            Alfil alfilEnemigo = (Alfil) enemigo;
+                            alfilEnemigo.setVidas(alfilEnemigo.getVidas() - 1);
+                            
+                            System.out.println("¡EL ALFIL HA RESUCITADO! Vidas restantes: " + alfilEnemigo.getVidas());
+                            
+                            // Devolver al Alfil a su casa (Lógica Interna)
+                            alfilEnemigo.setPosicion(alfilEnemigo.getPosicionInicial());
+                            
+                            //Pintarlo en el tablero (Lógica Visual)
+                            int filaInicial = alfilEnemigo.getPosicionInicial().getFila();
+                            int columnaInicial = alfilEnemigo.getPosicionInicial().getColumna();
+                            
+                            //Retorno del Alfil a su posición inicial en el tablero.
+                            tablero[filaInicial][columnaInicial] = posicionEnemiga;
+                        } else {
+                            // Victoria Normal
+                            System.out.println("¡Has capturado a " + posicionEnemiga + "! " + nombreJugador + " GANA.");
+                            hayGanador = true;
+                        }
+                    }
+                    // Cambio de turno (solo si el juego sigue)
+                    if (!hayGanador) {
+                        if (fichaActiva instanceof Torre) {
+                            Torre torreActiva = (Torre) fichaActiva;
+                            if (torreActiva.tieneTurnoExtra()) {
+                                System.out.println("¡La Torre " + posicionActiva + " obtiene un turno extra!");
+                                continue; // El mismo jugador juega de nuevo
+                            }
+                        }
+                        esTurnoBlanco = !esTurnoBlanco;
+                    }
+                    
+                } else {
+                    System.out.println("Movimiento no válido.");
+                }
+            } // Fin while juego
+        } while (opcion != 3); // Fin do-while menú
+        
+        sc.close();
     }
 }
