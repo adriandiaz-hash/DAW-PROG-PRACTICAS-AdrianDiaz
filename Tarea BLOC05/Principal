@@ -1,30 +1,66 @@
+package com.mycompany.principal;
 import java.util.Scanner;
 /*[T] @autor Adrián Díaz. */
+
 public class Principal{
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         String[][] tablero = new String[5][5];
-        Casilla casilla1 = new Casilla(0, 0);
-
-        System.out.println("Introduce el tipo de ficha blanca deseada (Alfíl, Caballo o Torre): ");
-        String tipoFicha = scanner.nextLine();
-        System.out.println("Introduce la posición inicial de la ficha blanca (fila y columna): ");
-        tablero[casilla1.getFila()][casilla1.getColumna()] = casilla1.getFichaBlanca(tipoFicha);
         
-
-        System.out.println("Tablero:");
-        System.out.println(tablero[0][0] + " " + tablero[0][1] + " " + tablero[0][2]);
-        System.out.println(tablero[1][0] + " " + tablero[1][1] + " " + tablero[1][2]);
-        System.out.println(tablero[2][0] + " " + tablero[2][1] + " " + tablero[2][2]);
-        System.out.println(tablero[3][0] + " " + tablero[3][1] + " " + tablero[3][2]);
-        System.out.println(tablero[4][0] + " " + tablero[4][1] + " " + tablero[4][2]);
-
-
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
-                tablero[i][j] = " ";
+                tablero[i][j] = "0";
             }
+        }
+
+        System.out.println("Introduce el tipo de ficha blanca deseada (Alfíl, Caballo o Torre): ");
+        String tipoFichaBlanca = sc.nextLine();
+        
+        System.out.println("Introduce la posición inicial de la ficha blanca (fila y columna): ");
+        int filaBlanca = sc.nextInt();
+        int columnaBlanca = sc.nextInt();
+        sc.nextLine();
+        tablero[filaBlanca][columnaBlanca] = tipoFichaBlanca.substring(0, 1).toLowerCase() + "b";
+        
+        if (tipoFichaBlanca.equalsIgnoreCase("Alfil")) {
+            tablero[filaBlanca][columnaBlanca] = "Ab";
+        } else if (tipoFichaBlanca.equalsIgnoreCase("Caballo")) {
+            tablero[filaBlanca][columnaBlanca] = "Cb";
+        } else if (tipoFichaBlanca.equalsIgnoreCase("Torre")) {
+            tablero[filaBlanca][columnaBlanca] = "Tb";
+        }
+        
+        System.out.println("Introduce el tipo de ficha negra deseada (Alfíl, Caballo o Torre): ");
+        String tipoFichaNegra = sc.nextLine();
+        
+        System.out.println("Introduce la posición inicial de la ficha negra (fila y columna): ");
+        int filaNegra = sc.nextInt();
+        int columnaNegra = sc.nextInt();
+        sc.nextLine();
+        
+        if (filaNegra == filaBlanca && columnaNegra == columnaBlanca) {
+            System.out.println("La posición de la ficha negra no puede ser la misma que la de la ficha blanca. Por favor, introduce una posición diferente.");
+            return;
+        } else {
+            tablero[filaNegra][columnaNegra] = tipoFichaNegra.substring(0, 1).toLowerCase() + "n";
+        }
+        
+        if (tipoFichaNegra.equalsIgnoreCase("Alfil")) {
+            tablero[filaNegra][columnaNegra] = "An";
+        } else if (tipoFichaNegra.equalsIgnoreCase("Caballo")) {
+            tablero[filaNegra][columnaNegra] = "Cn";
+        } else if (tipoFichaNegra.equalsIgnoreCase("Torre")) {
+            tablero[filaNegra][columnaNegra] = "Tn";
+        }
+        
+        System.out.println("Tablero:");
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[i].length; j++) {
+                System.out.print(tablero[i][j] + "\t");
+            }
+            
+            System.out.println();
         }
     }
 }
