@@ -1,7 +1,10 @@
 package com.mycompany.principal;
 import java.util.Scanner;
 
-/*[T] @autor Adrián Díaz. */
+/*[T] @autor Adrián Díaz.*/
+// Gestiona el menú de opciones, la configuración de la modalidad de juego (Básica/Avanzada)
+// y ejecuta el bucle principal de turnos y validación de reglas.
+
 
 public class Principal{
     public static void main(String[] args) {
@@ -15,7 +18,7 @@ public class Principal{
             System.out.println("2. Modo avanzado");
             System.out.println("3. Salir");
             System.out.print("Elija una opción: ");
-            opcion = sc.nextInt();
+            opcion = leerEntero(sc);
             sc.nextLine();
 
             if (opcion == 3) {
@@ -24,8 +27,8 @@ public class Principal{
             }
 
             // Valores por defecto para configuración básica
-            int vidasAlfil = 1;
-            int movimientosTorreParaExtra = 5;
+            int vidasAlfil = 0;
+            int movimientosTorreParaExtra = 0;
 
             if (opcion == 2) {
                 System.out.println("--- CONFIGURACIÓN MODO AVANZADO ---");
@@ -33,7 +36,7 @@ public class Principal{
                 // Configuración Torre
                 do {
                     System.out.println("Introduce el número de movimientos (entre 3 y 10) para el turno extra de la Torre: ");
-                    movimientosTorreParaExtra = sc.nextInt();
+                    movimientosTorreParaExtra = leerEntero(sc);
                     sc.nextLine();
                     if (movimientosTorreParaExtra < 3 || movimientosTorreParaExtra > 10) {
                         System.out.println("Error: Debe ser entre 3 y 10.");
@@ -43,7 +46,7 @@ public class Principal{
                 // Configuración Alfil
                 do {
                     System.out.println("Introduce el número de vidas extra para el Alfil: ");
-                    vidasAlfil = sc.nextInt();
+                    vidasAlfil = leerEntero(sc);
                     sc.nextLine();
                     if (vidasAlfil < 0) {
                         System.out.println("Error: Debe tener al menos 1 vida (0 vidas extra).");
@@ -69,8 +72,8 @@ public class Principal{
         System.out.println("Introduce el tipo de ficha blanca deseada (Alfíl, Caballo o Torre): ");
         String tipoFichaBlanca = sc.nextLine();
         System.out.println("Introduce la posición inicial de la ficha blanca (fila y columna): ");
-        int filaBlanca = sc.nextInt();
-        int columnaBlanca = sc.nextInt();
+        int filaBlanca = leerEntero(sc);
+        int columnaBlanca = leerEntero(sc);
         sc.nextLine();
         
         
@@ -94,8 +97,8 @@ public class Principal{
         
         do {
             System.out.println("Introduce la posición inicial de la ficha negra (fila y columna): ");
-            filaNegra = sc.nextInt();
-            columnaNegra = sc.nextInt();
+            filaNegra = leerEntero(sc);
+            columnaNegra = leerEntero(sc);
             sc.nextLine();
 
             if (filaNegra == filaBlanca && columnaNegra == columnaBlanca) {
@@ -138,8 +141,8 @@ public class Principal{
 
             System.out.println("\n Turno del jugador " + nombreJugador + " (" + posicionActiva + ")");
             System.out.println("Introduce coordenadas de destino (fila y columna): ");
-            int filaDestino = sc.nextInt();
-            int columnaDestino = sc.nextInt();
+            int filaDestino = leerEntero(sc);
+            int columnaDestino = leerEntero(sc);
             sc.nextLine();
 
             if (filaDestino < 0 || filaDestino >= tablero.length || columnaDestino < 0 || columnaDestino >= tablero[0].length) {
@@ -199,5 +202,13 @@ public class Principal{
         } while (opcion != 3); // Fin do-while menú
         
         sc.close();
+    }
+
+    public static int leerEntero(Scanner sc) {
+        while (!sc.hasNextInt()) {
+            System.out.println("¡Error! Debes introducir un número entero válido.");
+            sc.next(); // Limpia la entrada incorrecta del scanner
+        }
+        return sc.nextInt();
     }
 }

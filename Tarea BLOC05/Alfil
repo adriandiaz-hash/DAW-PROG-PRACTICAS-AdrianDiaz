@@ -1,6 +1,8 @@
 package com.mycompany.principal;
 
 /*[T] @autor Adrián Díaz. */
+// Subclase de Ficha que implementa el movimiento diagonal. En el modo avanzado,
+// gestiona la mecánica de 'vidas' y resurrección mediante el almacenamiento de su posición inicial.
 
 public class Alfil extends Ficha {
     private int vidas;
@@ -27,7 +29,6 @@ public class Alfil extends Ficha {
         int filaDestino = casilla.getFila();
         int columnaDestino = casilla.getColumna();
 
-        // El alfil se mueve en diagonal, por lo que la diferencia entre filas y columnas debe ser igual
         return Math.abs(filaDestino - filaActual) == Math.abs(columnaDestino - columnaActual);
     }
 }

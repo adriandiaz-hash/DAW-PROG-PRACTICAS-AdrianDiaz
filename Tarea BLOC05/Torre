@@ -1,6 +1,8 @@
 package com.mycompany.principal;
 
 /*[T] @autor Adrián Díaz. */
+// Subclase de Ficha que implementa el movimiento en línea recta.
+// En el modo avanzado, gestiona la mecánica de 'turno extra' contabilizando los pasos realizados.
 
 public class Torre extends Ficha {
     private int turnoExtra;

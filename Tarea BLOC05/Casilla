@@ -1,6 +1,8 @@
 package com.mycompany.principal;
 
 /*[T] @autor Adrián Díaz. */
+// Representa una coordenada (fila y columna) dentro del tablero,
+// utilizada para gestionar la posición de las fichas y los destinos de movimiento.
 
 public class Casilla {
     private int fila;

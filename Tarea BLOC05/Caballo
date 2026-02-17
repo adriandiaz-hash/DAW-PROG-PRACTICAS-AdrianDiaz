@@ -1,6 +1,8 @@
 package com.mycompany.principal;
 
 /*[T] @autor Adrián Díaz. */
+// Subclase de Ficha que implementa el movimiento en forma de 'L', combinando desplazamientos
+//  de 2 y 1 casillas en ejes perpendiculares.
 
 public class Caballo extends Ficha {
 
@@ -15,8 +17,7 @@ public class Caballo extends Ficha {
         int filaDestino = casilla.getFila();
         int columnaDestino = casilla.getColumna();
 
-        // El caballo se mueve en forma de "L", por lo que debe moverse dos casillas en una dirección y luego una casilla en la dirección perpendicular
         return (Math.abs(filaDestino - filaActual) == 2 && Math.abs(columnaDestino - columnaActual) == 1) ||
-               (Math.abs(filaDestino - filaActual) == 1 && Math.abs(columnaDestino - columnaActual) == 2);
+        (Math.abs(filaDestino - filaActual) == 1 && Math.abs(columnaDestino - columnaActual) == 2);
     }
 }

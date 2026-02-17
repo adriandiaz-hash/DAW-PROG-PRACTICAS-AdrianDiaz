@@ -1,6 +1,7 @@
 package com.mycompany.principal;
 
 /*[T] @autor Adrián Díaz. */
+//Estructura base de cualquier pieza del juego y declara el método moverA().
 
 public abstract class Ficha {
     private char color;
