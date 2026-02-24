@@ -1,93 +1,93 @@
-package com.mycompany.principal;
-import java.util.Scanner;
+package com.mycompany.principal; /*Conexión de paquete completo */
+import java.util.Scanner; /*Llamada a la herramienta Scanner */
 
 /*[T] @autor Adrián Díaz.*/
 // Gestiona el menú de opciones, la configuración de la modalidad de juego (Básica/Avanzada)
 // y ejecuta el bucle principal de turnos y validación de reglas.
 
 
-public class Principal{
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int opcion;
+public class Principal{ /*Clase Principal del proyecto, contiene el método main y la lógica de juego.*/
+    public static void main(String[] args) { // Método main, punto de entrada del programa.*/
+        Scanner sc = new Scanner(System.in); /*Creación de un objeto Scanner para leer la entrada del usuario.*/
+        int opcion; /*Variable para almacenar la opción seleccionada por el usuario en el menú.*/
 
         // Menú principal
-        do {
+        do { /*Bucle do-while para mostrar el menú principal y gestionar la selección del usuario.*/
             System.out.println("\n--- BIENVENIDO AL JAVAJEDREZ ---");
             System.out.println("1. Modo básico");
             System.out.println("2. Modo avanzado");
             System.out.println("3. Salir");
             System.out.print("Elija una opción: ");
-            opcion = leerEntero(sc);
-            sc.nextLine();
+            opcion = leerEntero(sc); /*Llamada a la función leerEntero para obtener una opción válida del usuario.*/
+            sc.nextLine(); /*Limpieza del buffer del scanner después de leer un entero.*/
 
-            if (opcion == 3) {
+            if (opcion == 3) { /*Si el usuario selecciona la opción 3, se muestra un mensaje de salida y se rompe el bucle para finalizar el programa.*/
                 System.out.println("Saliendo del sistema...");
                 break;
             }
 
-            // Valores por defecto para configuración básica
+            // Valores por defecto de atributos avanzados para configuración básica
             int vidasAlfil = 0;
             int movimientosTorreParaExtra = 0;
 
             if (opcion == 2) {
                 System.out.println("--- CONFIGURACIÓN MODO AVANZADO ---");
-                
+                /*Si el usuario selecciona la opción 2, se muestra un mensaje de configuración avanzada y se solicitan los parámetros específicos para el modo avanzado.*/
                 // Configuración Torre
                 do {
                     System.out.println("Introduce el número de movimientos (entre 3 y 10) para el turno extra de la Torre: ");
-                    movimientosTorreParaExtra = leerEntero(sc);
+                    movimientosTorreParaExtra = leerEntero(sc); /*Llamada a la función leerEntero para obtener un número válido de movimientos para el turno extra de la Torre.*/
                     sc.nextLine();
                     if (movimientosTorreParaExtra < 3 || movimientosTorreParaExtra > 10) {
                         System.out.println("Error: Debe ser entre 3 y 10.");
-                    }
-                } while (movimientosTorreParaExtra < 3 || movimientosTorreParaExtra > 10);
-
+                    } /*Si el número de movimientos ingresado no está entre 3 y 10, se muestra un mensaje de error y se solicita nuevamente la entrada.*/
+                } while (movimientosTorreParaExtra < 3 || movimientosTorreParaExtra > 10); /
+                
                 // Configuración Alfil
-                do {
+                do { /*Bucle do-while para solicitar el número de vidas extra para el Alfil. Se asegura de que el número ingresado sea 0 o positivo*/
                     System.out.println("Introduce el número de vidas extra para el Alfil: ");
-                    vidasAlfil = leerEntero(sc);
+                    vidasAlfil = leerEntero(sc); /*Llamada a la función leerEntero para obtener un número válido de vidas extra para el Alfil.*/
                     sc.nextLine();
                     if (vidasAlfil < 0) {
                         System.out.println("Error: Debe tener al menos 1 vida (0 vidas extra).");
-                    }
+                    } /*Si el número de vidas ingresado es negativo, se muestra un mensaje de error y se solicita nuevamente la entrada.*/
                 } while (vidasAlfil < 0);
             }
 
             //Inicialización del juego.
-        String[][] tablero = new String[5][5];
-        for (int i = 0; i < tablero.length; i++) {
+        String[][] tablero = new String[5][5]; // Creación de un tablero de 5x5 representado como una matriz de Strings.
+        for (int i = 0; i < tablero.length; i++) { /*Bucle para inicializar el tablero con "0" en cada casilla, indicando que están vacías al inicio del juego.*/
             for (int j = 0; j < tablero[i].length; j++) {
                 tablero[i][j] = "0";
             }
         }
 
         Ficha fichaBlanca = null;
-        Ficha fichaNegra = null;
-        String posicionBlanca = "";
+        Ficha fichaNegra = null; // Declara las variables para las fichas blanca y negra, que se inicializarán posteriormente según la elección del usuario.
+        String posicionBlanca = ""; // Variables para almacenar las representaciones visuales de las fichas en el tablero, que se asignarán según el tipo de ficha seleccionada por el usuario.
         String posicionNegra = "";
 
         //Creación de ficha blanca.
         System.out.println("\n--- JUGADOR BLANCO ---");
         System.out.println("Introduce el tipo de ficha blanca deseada (Alfíl, Caballo o Torre): ");
-        String tipoFichaBlanca = sc.nextLine();
+        String tipoFichaBlanca = sc.nextLine(); /*Solicita al usuario que introduzca el tipo de ficha blanca deseada (Alfil, Caballo o Torre) y almacena la entrada en la variable tipoFichaBlanca.*/
         System.out.println("Introduce la posición inicial de la ficha blanca (fila y columna): ");
-        int filaBlanca = leerEntero(sc);
-        int columnaBlanca = leerEntero(sc);
+        int filaBlanca = leerEntero(sc); /*Llamada a la función leerEntero para obtener un número válido para la fila inicial de la ficha blanca.*/
+        int columnaBlanca = leerEntero(sc); /*Llamada a la función leerEntero para obtener un número válido para la columna inicial de la ficha blanca.*/
         sc.nextLine();
         
         
-        if (tipoFichaBlanca.equalsIgnoreCase("Alfil")) {
-            fichaBlanca = new Alfil('b', new Casilla(filaBlanca, columnaBlanca), vidasAlfil); 
+        if (tipoFichaBlanca.equalsIgnoreCase("Alfil")) { /*Según el tipo de ficha blanca seleccionado por el usuario, se crea una instancia de la clase correspondiente (Alfil, Caballo o Torre) y se asigna a la variable fichaBlanca. Además, se asigna una representación visual específica para cada tipo de ficha en el tablero.*/
+            fichaBlanca = new Alfil('b', new Casilla(filaBlanca, columnaBlanca), vidasAlfil); // Si el tipo de ficha blanca es "Alfil", se crea una instancia de la clase Alfil con el color 'b' (blanco), la posición inicial y las vidas configuradas para el modo avanzado, y se asigna la representación "Ab" para el tablero.
             posicionBlanca = "Ab";
-        } else if (tipoFichaBlanca.equalsIgnoreCase("Caballo")) {
+        } else if (tipoFichaBlanca.equalsIgnoreCase("Caballo")) { /*Si el tipo de ficha blanca es "Caballo", se crea una instancia de la clase Caballo con el color 'b' (blanco) y la posición inicial, y se asigna la representación "Cb" para el tablero.*/
             fichaBlanca = new Caballo('b', new Casilla(filaBlanca, columnaBlanca));
             posicionBlanca = "Cb";
-        } else if (tipoFichaBlanca.equalsIgnoreCase("Torre")) {
+        } else if (tipoFichaBlanca.equalsIgnoreCase("Torre")) { /* Si el tipo de ficha blanca es "Torre", se crea una instancia de la clase Torre con el color 'b' (blanco), la posición inicial y los movimientos configurados para el turno extra en el modo avanzado, y se asigna la representación "Tb" para el tablero.*/
             fichaBlanca = new Torre('b', new Casilla(filaBlanca, columnaBlanca), movimientosTorreParaExtra);
             posicionBlanca = "Tb";
         }
-        tablero[filaBlanca][columnaBlanca] = posicionBlanca;
+        tablero[filaBlanca][columnaBlanca] = posicionBlanca; // Se coloca la representación visual de la ficha blanca en la posición inicial del tablero según las coordenadas ingresadas por el usuario.
 
         //Creación de ficha negra.
         System.out.println("\n--- JUGADOR NEGRO ---");
@@ -101,7 +101,7 @@ public class Principal{
             columnaNegra = leerEntero(sc);
             sc.nextLine();
 
-            if (filaNegra == filaBlanca && columnaNegra == columnaBlanca) {
+            if (filaNegra == filaBlanca && columnaNegra == columnaBlanca) { /* Si la posicion seleccionada por el jugador negro es la misma que la del jugador blanco se le lanza un mensaje de error*/
                 System.out.println("¡Posición ocupada! No puedes ocupar la posición del enemigo al inicio.");
             }
         } while (filaNegra == filaBlanca && columnaNegra == columnaBlanca);
@@ -119,11 +119,11 @@ public class Principal{
         tablero[filaNegra][columnaNegra] = posicionNegra;
 
         // Bucle principal del juego (universal).
-        boolean hayGanador = false;
-        boolean esTurnoBlanco = true;
+        boolean hayGanador = false; // Variable para controlar si hay un ganador y finalizar el juego.
+        boolean esTurnoBlanco = true; // Variable para controlar de quién es el turno actual, comenzando con el jugador blanco.
         
         //Dibuja Tablero inicial.
-        while (!hayGanador) {
+        while (!hayGanador) { // Bucle principal del juego que se ejecuta mientras no haya un ganador. En cada iteración, se muestra el estado actual del tablero, se solicita al jugador activo que ingrese las coordenadas de destino para mover su ficha, y se valida el movimiento según las reglas del juego. Si el movimiento es válido, se actualiza el tablero y se verifica si se ha capturado al enemigo o si el jugador activo obtiene un turno extra (en caso de ser una Torre). El juego continúa hasta que uno de los jugadores capture al otro, declarando un ganador.
             System.out.println("Tablero:");
             for (int i = 0; i < tablero.length; i++) {
                 for (int j = 0; j < tablero[i].length; j++) {
@@ -133,36 +133,36 @@ public class Principal{
             }
 
             //Indentificador de turno.
-            Ficha fichaActiva = esTurnoBlanco ? fichaBlanca : fichaNegra;
-            Ficha enemigo = esTurnoBlanco ? fichaNegra : fichaBlanca;
-            String posicionActiva = esTurnoBlanco ? posicionBlanca : posicionNegra;
+            Ficha fichaActiva = esTurnoBlanco ? fichaBlanca : fichaNegra; /*Según de quién sea el turno actual, se asigna la ficha activa (fichaBlanca o fichaNegra) a la variable fichaActiva, y se asignan las representaciones visuales correspondientes para el jugador activo y el enemigo, así como el nombre del jugador para mostrar en los mensajes de turno.*/
+            Ficha enemigo = esTurnoBlanco ? fichaNegra : fichaBlanca; // Variables para identificar al jugador activo y al enemigo, así como sus representaciones visuales en el tablero.
+            String posicionActiva = esTurnoBlanco ? posicionBlanca : posicionNegra; // Variables para identificar al jugador activo y al enemigo, así como sus representaciones visuales en el tablero.
             String posicionEnemiga = esTurnoBlanco ? posicionNegra : posicionBlanca;
-            String nombreJugador = esTurnoBlanco ? "BLANCO" : "NEGRO";
+            String nombreJugador = esTurnoBlanco ? "BLANCO" : "NEGRO"; // Variable para almacenar el nombre del jugador activo, que se utiliza en los mensajes de turno y victoria.
 
             System.out.println("\n Turno del jugador " + nombreJugador + " (" + posicionActiva + ")");
-            System.out.println("Introduce coordenadas de destino (fila y columna): ");
+            System.out.println("Introduce coordenadas de destino (fila y columna): "); /*Se solicita al jugador activo que ingrese las coordenadas de destino para mover su ficha, y se almacenan en las variables filaDestino y columnaDestino después de validar que sean números enteros válidos mediante la función leerEntero.*/
             int filaDestino = leerEntero(sc);
             int columnaDestino = leerEntero(sc);
             sc.nextLine();
 
             if (filaDestino < 0 || filaDestino >= tablero.length || columnaDestino < 0 || columnaDestino >= tablero[0].length) {
-                System.out.println("¡Movimiento fuera del tablero! Intenta de nuevo.");
+                System.out.println("¡Movimiento fuera del tablero! Intenta de nuevo."); /*Si las coordenadas de destino ingresadas por el jugador están fuera de los límites del tablero, se muestra un mensaje de error indicando que el movimiento es inválido y se solicita al jugador que intente nuevamente, continuando con la siguiente iteración del bucle sin realizar ningún cambio en el tablero.*/
                 continue;
             }
 
             Casilla destino = new Casilla(filaDestino, columnaDestino);
 
             // Lógica de movimiento base.
-            if (fichaActiva.moverA(destino)) {
-                tablero[fichaActiva.getPosicion().getFila()][fichaActiva.getPosicion().getColumna()] = "0";
-                fichaActiva.setPosicion(destino);
-                tablero[filaDestino][columnaDestino] = posicionActiva;
+            if (fichaActiva.moverA(destino)) { /*Si el movimiento a las coordenadas de destino es válido según las reglas de movimiento de la ficha activa, se actualiza el tablero moviendo la ficha a la nueva posición, y se verifica si se ha capturado al enemigo o si el jugador activo obtiene un turno extra (en caso de ser una Torre). Si el movimiento no es válido, se muestra un mensaje de error indicando que el movimiento no es válido y se solicita al jugador que intente nuevamente, continuando con la siguiente iteración del bucle sin realizar ningún cambio en el tablero.*/
+                tablero[fichaActiva.getPosicion().getFila()][fichaActiva.getPosicion().getColumna()] = "0"; // Limpia la posición anterior de la ficha en el tablero, colocando un "0" para indicar que está vacía.
+                fichaActiva.setPosicion(destino); // Actualiza la posición de la ficha activa a las coordenadas de destino ingresadas por el jugador.
+                tablero[filaDestino][columnaDestino] = posicionActiva; // Coloca la representación visual de la ficha activa en la nueva posición del tablero según las coordenadas de destino.
 
-                //Lógcia de captura y resurrección (Alfil).
+                //Lógica de captura y resurrección (Alfil).
                     if (filaDestino == enemigo.getPosicion().getFila() && columnaDestino == enemigo.getPosicion().getColumna()) {
                         
                         // ¿Es un Alfil con vidas?
-                        if (enemigo instanceof Alfil && ((Alfil) enemigo).getVidas() > 0) {
+                        if (enemigo instanceof Alfil && ((Alfil) enemigo).getVidas() > 0) { // Si el enemigo es un Alfil y tiene vidas restantes, se reduce su vida en 1, se muestra un mensaje indicando que ha resucitado con las vidas restantes, y se devuelve al Alfil a su posición inicial tanto en la lógica interna como en el tablero visual.
                             Alfil alfilEnemigo = (Alfil) enemigo;
                             alfilEnemigo.setVidas(alfilEnemigo.getVidas() - 1);
                             
@@ -185,30 +185,30 @@ public class Principal{
                     }
                     // Cambio de turno (solo si el juego sigue)
                     if (!hayGanador) {
-                        if (fichaActiva instanceof Torre) {
+                        if (fichaActiva instanceof Torre) { // Si la ficha activa es una Torre, se verifica si obtiene un turno extra según las reglas del juego. Si la Torre tiene derecho a un turno extra, se muestra un mensaje indicando que el jugador obtiene un turno adicional y se continúa con el mismo jugador sin cambiar el turno. Si no tiene turno extra, se cambia al siguiente jugador normalmente.
                             Torre torreActiva = (Torre) fichaActiva;
                             if (torreActiva.tieneTurnoExtra()) {
                                 System.out.println("¡La Torre " + posicionActiva + " obtiene un turno extra!");
                                 continue; // El mismo jugador juega de nuevo
                             }
                         }
-                        esTurnoBlanco = !esTurnoBlanco;
+                        esTurnoBlanco = !esTurnoBlanco; // Cambia al siguiente jugador para el próximo turno.
                     }
                     
-                } else {
+                } else { // Si el movimiento no es válido según las reglas de la ficha activa, se muestra un mensaje de error indicando que el movimiento no es válido y se solicita al jugador que intente nuevamente, continuando con la siguiente iteración del bucle sin realizar ningún cambio en el tablero.
                     System.out.println("Movimiento no válido.");
                 }
             } // Fin while juego
         } while (opcion != 3); // Fin do-while menú
         
-        sc.close();
+        sc.close(); /*Cierra el objeto Scanner para liberar los recursos asociados a la entrada del usuario al finalizar el programa.*/
     }
 
-    public static int leerEntero(Scanner sc) {
-        while (!sc.hasNextInt()) {
+    public static int leerEntero(Scanner sc) { /*Función auxiliar para leer un número entero válido desde el Scanner. Si el usuario ingresa un valor que no es un número entero, se muestra un mensaje de error y se solicita nuevamente la entrada hasta que se ingrese un número entero válido.*/
+        while (!sc.hasNextInt()) { /*Bucle while que verifica si la entrada del usuario no es un número entero utilizando el método hasNextInt() del Scanner. Si la entrada no es un número entero, se muestra un mensaje de error y se limpia la entrada incorrecta del Scanner para permitir al usuario ingresar nuevamente.*/
             System.out.println("¡Error! Debes introducir un número entero válido.");
             sc.next(); // Limpia la entrada incorrecta del scanner
         }
-        return sc.nextInt();
+        return sc.nextInt(); // Devuelve el número entero válido ingresado por el usuario después de salir del bucle, permitiendo que el programa continúe con la lógica de juego utilizando el valor ingresado.
     }
 }

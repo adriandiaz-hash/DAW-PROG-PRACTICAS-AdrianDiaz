@@ -16,7 +16,7 @@ public class Caballo extends Ficha {
         int columnaActual = getPosicion().getColumna();
         int filaDestino = casilla.getFila();
         int columnaDestino = casilla.getColumna();
-
+        // El movimiento es válido si se mueve 2 casillas en un eje y 1 casilla en el otro, formando una 'L'.
         return (Math.abs(filaDestino - filaActual) == 2 && Math.abs(columnaDestino - columnaActual) == 1) ||
         (Math.abs(filaDestino - filaActual) == 1 && Math.abs(columnaDestino - columnaActual) == 2);
     }

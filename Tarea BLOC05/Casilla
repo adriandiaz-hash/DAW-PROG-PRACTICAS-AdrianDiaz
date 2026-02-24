@@ -4,7 +4,7 @@ package com.mycompany.principal;
 // Representa una coordenada (fila y columna) dentro del tablero,
 // utilizada para gestionar la posición de las fichas y los destinos de movimiento.
 
-public class Casilla {
+public class Casilla { // Clase que representa una casilla en el tablero, con atributos para la fila y la columna, así como métodos para obtener y establecer estos atributos. Esta clase se utiliza para gestionar las posiciones de las fichas en el tablero y para validar los movimientos según las reglas del juego.
     private int fila;
     private int columna;
 

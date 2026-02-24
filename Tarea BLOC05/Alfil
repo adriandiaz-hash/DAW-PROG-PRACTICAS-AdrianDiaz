@@ -6,29 +6,29 @@ package com.mycompany.principal;
 
 public class Alfil extends Ficha {
     private int vidas;
-    private Casilla posicionInicial;
+    private Casilla posicionInicial; // Atributo para almacenar la posición inicial del Alfil, que se utiliza para devolverlo a esa posición en caso de ser capturado y resucitar con vidas restantes.
 
     public Alfil(char color, Casilla posicion, int vidas) {
-        super(color, posicion);
+        super(color, posicion); // Llama al constructor de la clase base Ficha para inicializar el color y la posición del Alfil, y luego inicializa el atributo vidas con el valor proporcionado, así como la posiciónInicial con la posición actual del Alfil.
         this.vidas = vidas;
         this.posicionInicial = posicion;
     }
-    public Casilla getPosicionInicial() {
+    public Casilla getPosicionInicial() { // Método para obtener la posición inicial del Alfil, que se utiliza en la lógica de resurrección para devolver al Alfil a su posición original en el tablero después de ser capturado y resucitar con vidas restantes.
         return posicionInicial;
     }
-    public int getVidas() {
+    public int getVidas() { //
         return vidas;
     }
     public void setVidas(int vidas) {
         this.vidas = vidas;
     }
-    @Override
-    public boolean moverA(Casilla casilla) {
-        int filaActual = getPosicion().getFila();
-        int columnaActual = getPosicion().getColumna();
-        int filaDestino = casilla.getFila();
+    @Override // Implementación del método moverA() para el Alfil, que valida si el movimiento a las coordenadas de destino es diagonal (es decir, si la diferencia absoluta entre las filas es igual a la diferencia absoluta entre las columnas). Si el movimiento es diagonal, devuelve true; de lo contrario, devuelve false, indicando que el movimiento no es válido según las reglas del juego para el Alfil.
+    public boolean moverA(Casilla casilla) { // 
+        int filaActual = getPosicion().getFila(); // Obtiene la fila y columna actuales del Alfil utilizando el método getPosicion() heredado de la clase Ficha, y luego obtiene las filas y columnas de destino a partir de la casilla proporcionada como argumento.
+        int columnaActual = getPosicion().getColumna(); 
+        int filaDestino = casilla.getFila(); // Obtiene la fila y columna de destino a partir de la casilla proporcionada como argumento, utilizando los métodos getFila() y getColumna() de la clase Casilla.
         int columnaDestino = casilla.getColumna();
 
-        return Math.abs(filaDestino - filaActual) == Math.abs(columnaDestino - columnaActual);
+        return Math.abs(filaDestino - filaActual) == Math.abs(columnaDestino - columnaActual); // El movimiento es válido si la diferencia absoluta entre las filas es igual a la diferencia absoluta entre las columnas, lo que indica un movimiento diagonal.
     }
 }

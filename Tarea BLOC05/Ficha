@@ -3,7 +3,7 @@ package com.mycompany.principal;
 /*[T] @autor Adrián Díaz. */
 //Estructura base de cualquier pieza del juego y declara el método moverA().
 
-public abstract class Ficha {
+public abstract class Ficha { // Clase abstracta que representa una ficha en el juego, con atributos para el color y la posición de la ficha, así como métodos para obtener y establecer estos atributos. Además, declara un método abstracto moverA() que debe ser implementado por las clases concretas de fichas (Alfil y Torre) para definir su lógica de movimiento específica según las reglas del juego.
     private char color;
     private Casilla posicion;
 
