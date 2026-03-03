@@ -2,6 +2,7 @@ package com.mycompany.principal;
 
 /*[T] @autor Adrián Díaz. */
 //Estructura base de cualquier pieza del juego y declara el método moverA().
+//Refactorizado con copias defensivas para blindar la encapsulación.
 
 public abstract class Ficha { // Clase abstracta que representa una ficha en el juego, con atributos para el color y la posición de la ficha, así como métodos para obtener y establecer estos atributos. Además, declara un método abstracto moverA() que debe ser implementado por las clases concretas de fichas (Alfil y Torre) para definir su lógica de movimiento específica según las reglas del juego.
     private char color;
@@ -9,19 +10,19 @@ public abstract class Ficha { // Clase abstracta que representa una ficha en el 
 
     public Ficha(char color, Casilla posicion) {
         this.color = color;
-        this.posicion = posicion;
+        this.posicion = new Casilla(posicion.getFila(), posicion.getColumna());
     }
     public char getColor() {
         return color;
     }
     public Casilla getPosicion() {
-        return posicion;
+        return new Casilla(posicion.getFila(), posicion.getColumna());
     }
     public void setColor(char color) {
         this.color = color;
     }
     public void setPosicion(Casilla posicion) {
-        this.posicion = posicion;
+        this.posicion = new Casilla(posicion.getFila(), posicion.getColumna());
     }
     public abstract boolean moverA(Casilla casilla);
 }

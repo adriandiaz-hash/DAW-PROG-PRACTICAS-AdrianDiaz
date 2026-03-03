@@ -10,25 +10,47 @@ public class Alfil extends Ficha {
 
     public Alfil(char color, Casilla posicion, int vidas) {
         super(color, posicion); // Llama al constructor de la clase base Ficha para inicializar el color y la posición del Alfil, y luego inicializa el atributo vidas con el valor proporcionado, así como la posiciónInicial con la posición actual del Alfil.
-        this.vidas = vidas;
-        this.posicionInicial = posicion;
+        this.setVidas(vidas);
+        this.posicionInicial = new Casilla(posicion.getFila(), posicion.getColumna()); // Almacena la posición inicial del Alfil utilizando una copia defensiva para garantizar la encapsulación y evitar que la posición inicial sea modificada desde fuera de la clase.
     }
     public Casilla getPosicionInicial() { // Método para obtener la posición inicial del Alfil, que se utiliza en la lógica de resurrección para devolver al Alfil a su posición original en el tablero después de ser capturado y resucitar con vidas restantes.
-        return posicionInicial;
+        return new Casilla(this.posicionInicial.getFila(), this.posicionInicial.getColumna()); // Devuelve una copia defensiva de la posición inicial para garantizar la encapsulación y evitar que la posición inicial sea modificada desde fuera de la clase.
+    }
+    public void setPosicionInicial(Casilla posicionInicial) { // Método para establecer la posición inicial del Alfil, que se utiliza en la lógica de resurrección para actualizar la posición inicial del Alfil en caso de que sea necesario.
+        this.posicionInicial = new Casilla(posicionInicial.getFila(), posicionInicial.getColumna()); // Establece la posición inicial utilizando una copia defensiva para garantizar la encapsulación y evitar que la posición inicial sea modificada desde fuera de la clase.
     }
     public int getVidas() { //
         return vidas;
     }
     public void setVidas(int vidas) {
-        this.vidas = vidas;
+        if (vidas <= 0) {
+            this.vidas = vidas;
+        } else {
+            System.out.println("Advertencia de seguridad: Vidas negativas detectadas. Ajustando a 0.");
+            this.vidas = 0;
+        }
     }
     @Override // Implementación del método moverA() para el Alfil, que valida si el movimiento a las coordenadas de destino es diagonal (es decir, si la diferencia absoluta entre las filas es igual a la diferencia absoluta entre las columnas). Si el movimiento es diagonal, devuelve true; de lo contrario, devuelve false, indicando que el movimiento no es válido según las reglas del juego para el Alfil.
-    public boolean moverA(Casilla casilla) { // 
+    public boolean moverA(Casilla casilla) { // Obtiene la fila y columna actuales del Alfil utilizando el método getPosicion() heredado de la clase Ficha, y luego obtiene las filas y columnas de destino a partir de la casilla proporcionada como argumento, utilizando los métodos getFila() y getColumna() de la clase Casilla.
         int filaActual = getPosicion().getFila(); // Obtiene la fila y columna actuales del Alfil utilizando el método getPosicion() heredado de la clase Ficha, y luego obtiene las filas y columnas de destino a partir de la casilla proporcionada como argumento.
         int columnaActual = getPosicion().getColumna(); 
         int filaDestino = casilla.getFila(); // Obtiene la fila y columna de destino a partir de la casilla proporcionada como argumento, utilizando los métodos getFila() y getColumna() de la clase Casilla.
         int columnaDestino = casilla.getColumna();
 
-        return Math.abs(filaDestino - filaActual) == Math.abs(columnaDestino - columnaActual); // El movimiento es válido si la diferencia absoluta entre las filas es igual a la diferencia absoluta entre las columnas, lo que indica un movimiento diagonal.
+        // [T] Control de inmovilidad: Quedarse en el sitio no es un movimiento válido.
+        if (filaActual == filaDestino && columnaActual == columnaDestino) {
+            return false;
+        }
+
+        // Validación matemática del movimiento diagonal
+        boolean esMovimientoValido = Math.abs(filaDestino - filaActual) == Math.abs(columnaDestino - columnaActual);
+
+        // [T] El Alfil es independiente: si el movimiento es válido, ÉL MISMO actualiza su posición.
+        if (esMovimientoValido) {
+            this.setPosicion(casilla); // Usamos el setter de la clase padre Ficha
+            return true;
+        }
+
+        return false; // Si el movimiento no es diagonal, devolvemos false indicando que el movimiento no es válido según las reglas del juego para el Alfil.
     }
 }
