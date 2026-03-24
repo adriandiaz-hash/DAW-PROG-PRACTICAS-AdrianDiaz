@@ -1,5 +1,4 @@
 package com.mycompany.concessionari;
-
 /**
  * Concessionari2 - Ús d'un array de Vehicles
  * @author avf i dsb

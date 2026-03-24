@@ -18,7 +18,7 @@ public class Vehicles {
     }
     
     public void afegirVehicle(Vehicle nou) {
-        vehicles.add(new Vehicle(nou));
+        vehicles.add(nou.copiar());
     }
 
     public int comptarVehiclesDeMarca(String marca) {
@@ -37,5 +37,21 @@ public class Vehicles {
                 vehicles.get(i).setMarca(marcaNova);
             }
         }
+    }
+
+    public Vehicle retornaVehicleConsumMinim() {
+        Vehicle vehicleMinim = null;
+
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (v.getPotencia() == potencia) {
+                if (vehicleMinim == null || v.retornaConsum() < vehicleMinim.retornaConsum()) {
+                    vehicleMinim = v;
+                }
+            }
+        }
+        if (vehicleMinim == null) {
+            throw new Exception("No s'ha trobat cap vehicle amb la potencia de " + potencia);
+        }
+        return vehicleMinim.copiar(); // Retorna una còpia del vehicle per evitar que es modifiqui l'original
     }
 }

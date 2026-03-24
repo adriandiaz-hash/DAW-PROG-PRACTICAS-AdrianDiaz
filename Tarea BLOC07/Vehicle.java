@@ -2,23 +2,28 @@ package com.mycompany.concessionari;
 
 /**
  * @author Adrián Díaz García
- * Vehicle - Classe.
+ * Objecte Pare Vehicle.
  */
-public class Vehicle {
+public abstract class Vehicle {
 
     private String marca;
     private int potencia;
     private int velocitat;
     private int velocitatMaxima;
+    private double consumBase;
+
+    public abstract double retornaConsum();
+    public abstract Vehicle copiar();
 
     public Vehicle() {
     }
 
-    public Vehicle(String marca, int potencia, int velocitat, int velocitatMaxima) {
+    public Vehicle(String marca, int potencia, int velocitat, int velocitatMaxima, double consumBase) {
         this.marca = marca;
         this.potencia = potencia;
         this.velocitat = velocitat;
         this.velocitatMaxima = velocitatMaxima;
+        this.consumBase = consumBase;
     }
 
     public Vehicle(Vehicle vehicle) { //CONSTRUCTOR CÒPIA
@@ -26,6 +31,7 @@ public class Vehicle {
         this.potencia = vehicle.potencia;
         this.velocitat = vehicle.velocitat;
         this.velocitatMaxima = vehicle.velocitatMaxima;
+        this.consumBase = vehicle.consumBase;
     }
 
     public String getMarca() {
@@ -58,6 +64,14 @@ public class Vehicle {
 
     public void setVelocitatMaxima(int velocitatMaxima) {
         this.velocitatMaxima = velocitatMaxima;
+    }
+
+    public double getConsumBase() {
+        return consumBase;
+    }
+
+    public void setConsumBase(double consumBase) {
+        this.consumBase = consumBase;
     }
 
     public void augmentarVelocitat(int increment) {
