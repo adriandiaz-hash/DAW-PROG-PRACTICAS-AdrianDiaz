@@ -1,0 +1,61 @@
+package com.mycompany.concessionari;
+import java.util.ArrayList;
+import java.io.Serializable;
+
+/**
+ * Classe gestora que emmagatzema i administra una col·lecció d'objectes Vehicle.
+ * Permet realitzar operacions d'addició, cerca i manipulació de dades, 
+ * assegurant l'encapsulament mitjançant l'ús de còpies d'objectes.
+ * * @autor [T] Adrián Díaz García
+ */
+
+public class Vehicles implements Serializable {
+
+    ArrayList<Vehicle> vehicles = new ArrayList<>();
+
+    public ArrayList<Vehicle> getVehicles() {
+        ArrayList<Vehicle> nou = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            nou.add(vehicle.copiar());
+        }
+        return nou;
+    }
+    
+    public void afegirVehicle(Vehicle nou) {
+        vehicles.add(nou.copiar());
+    }
+
+    public int comptarVehiclesDeMarca(String marca) {
+        int comptador = 0;
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (vehicles.get(i).getMarca().equals(marca)) {
+                comptador++;
+            }
+        }
+        return comptador;
+    }
+
+    public void canviarMarca(String marca, String marcaNova) {
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (vehicles.get(i).getMarca().equals(marca)) {
+                vehicles.get(i).setMarca(marcaNova);
+            }
+        }
+    }
+
+    public Vehicle retornaVehicleConsumMinim(int potencia) throws Exception {
+        Vehicle vehicleMinim = null;
+
+        for (Vehicle v : vehicles) {
+            if (v.getPotencia() == potencia) {
+                if (vehicleMinim == null || v.retornaConsum() < vehicleMinim.retornaConsum()) {
+                    vehicleMinim = v;
+                }
+            }
+        }
+        if (vehicleMinim == null) {
+            throw new Exception("No s'ha trobat cap vehicle amb la potencia de " + potencia);
+        }
+        return vehicleMinim.copiar();
+    }
+}

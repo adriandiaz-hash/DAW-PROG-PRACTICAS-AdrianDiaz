@@ -1,0 +1,50 @@
+package com.mycompany.concessionari;
+
+/**
+ * Subclasse de Vehicle que representa un cotxe. 
+ * Afegeix característiques pròpies com el nombre de portes i 
+ * sobreescriu el mètode per calcular el consum específic.
+ * * @autor [T] Adrián Díaz García
+ */
+
+public class Cotxe extends Vehicle {
+
+    private final int nombrePortes;
+    
+    public Cotxe(String marca, int potencia, int velocitat, int velocitatMaxima, double consumBase, int nombrePortes) {
+        super(marca, potencia, velocitat, velocitatMaxima, consumBase);
+        this.nombrePortes = nombrePortes;
+    }
+    
+    // CONSTRUCTOR COPIA DE COTXE
+    public Cotxe(Cotxe c) {
+        super(c);
+        this.nombrePortes = c.nombrePortes; 
+    }
+
+    @Override
+    public double retornaConsum() {
+
+        double consumFinal = getConsumBase();
+
+        if (getPotencia() > 110) {
+            consumFinal += getConsumBase() * 0.05;
+        } if (nombrePortes == 5) {
+            consumFinal += getConsumBase() * 0.01;
+        }
+        return consumFinal;
+    }
+    @Override
+    public Vehicle copiar() {
+        return new Cotxe(this);
+    }
+    
+    @Override
+    public String toString() {
+        return "[COTXE] Marca: " + getMarca() + 
+               " | Potència: " + getPotencia() + " CV" +
+               " | Vel: " + getVelocitat() + "/" + getVelocitatMaxima() + " km/h" +
+               " | Consum base: " + getConsumBase() + 
+               " | Portes: " + nombrePortes;
+    }
+}
