@@ -38,12 +38,12 @@ public class PaymentDAO {
             
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    Payment p = new Payment();
-                    p.setCustomerNumber(customerNumber);
-                    p.setCheckNumber(rs.getString("checkNumber"));
-                    p.setPaymentDate(rs.getDate("paymentDate"));
-                    p.setAmount(rs.getDouble("amount"));
-                    pagos.add(p);
+                    // Creación directa mediante constructor, sin setters superfluos.
+                    pagos.add(new Payment(
+                        rs.getString("checkNumber"),
+                        rs.getDate("paymentDate"),
+                        rs.getDouble("amount")
+                    ));
                 }
             }
         }
@@ -84,7 +84,6 @@ public class PaymentDAO {
             pstmt.setInt(2, customerNumber);
             pstmt.setString(3, checkNumber);
             
-            // executeUpdate devuelve el número de filas afectadas en la base de datos
             int filasAfectadas = pstmt.executeUpdate();
             return filasAfectadas > 0;
         }
